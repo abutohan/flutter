@@ -1,0 +1,4 @@
+repo
+	- https://github.com/academind/flutter-complete-guide-course-resources
+flutter widgets
+	- https://docs.flutter.dev/ui/widgets

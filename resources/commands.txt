@@ -1,0 +1,2 @@
+flutter create name_app
+	- create a flutter app
