@@ -1,2 +1,6 @@
-flutter create name_app
-	- create a flutter app
+flutter create <name_app>
+	- Create a Flutter app
+flutter run
+	- Execute app
+flutter pub add <package_name>
+	- Install a package
