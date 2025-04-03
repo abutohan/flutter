@@ -75,22 +75,7 @@ class _NewExpenseState extends State<NewExpense> {
         category: _selectedCategory,
       ),
     );
-    // showDialog(
-    //   context: context,
-    //   builder:
-    //       (ctx) => AlertDialog(
-    //         title: const Text("Expense saved!"),
-    //         content: const Text("Please correct your inputs"),
-    //         actions: [
-    //           TextButton(
-    //             onPressed: () {
-    //               Navigator.pop(ctx);
-    //             },
-    //             child: const Text("Okay"),
-    //           ),
-    //         ],
-    //       ),
-    // );
+
     Navigator.pop(context);
   }
 
