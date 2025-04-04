@@ -12,23 +12,24 @@ class ExpensesController extends StatefulWidget {
 }
 
 class _ExpensesControllerState extends State<ExpensesController> {
-  final List<Expense> _registeredExpensed = [
-    Expense(
-      title: "Flutter Course",
-      amount: 19.99,
-      date: DateTime.now(),
-      category: Category.work,
-    ),
-    (Expense(
-      title: "Cinema",
-      amount: 15.69,
-      date: DateTime.now(),
-      category: Category.leisure,
-    )),
-  ];
+  final List<Expense> _registeredExpensed = [];
+  //   Expense(
+  //     title: "Flutter Course",
+  //     amount: 19.99,
+  //     date: DateTime.now(),
+  //     category: Category.work,
+  //   ),
+  //   (Expense(
+  //     title: "Cinema",
+  //     amount: 15.69,
+  //     date: DateTime.now(),
+  //     category: Category.entertainment,
+  //   )),
+  // ];
 
   void _openAddExpenseOverlay() {
     showModalBottomSheet(
+      useSafeArea: true,
       isScrollControlled: true,
       context: context,
       builder: (ctx) => NewExpense(onAddExpense: _addExpense),
@@ -65,6 +66,8 @@ class _ExpensesControllerState extends State<ExpensesController> {
 
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
+
     Widget mainContent = const Center(
       child: Text("No expenses found. Start adding some! 🥹👉👈"),
     );
@@ -86,12 +89,20 @@ class _ExpensesControllerState extends State<ExpensesController> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Chart(expenses: _registeredExpensed),
-          Expanded(child: mainContent),
-        ],
-      ),
+      body:
+          width < 600
+              ? Column(
+                children: [
+                  Chart(expenses: _registeredExpensed),
+                  Expanded(child: mainContent),
+                ],
+              )
+              : Row(
+                children: [
+                  Expanded(child: Chart(expenses: _registeredExpensed)),
+                  Expanded(child: mainContent),
+                ],
+              ),
     );
   }
 }
