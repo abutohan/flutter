@@ -1,6 +1,6 @@
 import 'package:meals_app/models/meal.dart';
 
-const List<Meal> dummyMeals = [
+List<Meal> dummyMeals = [
   Meal(
     id: 'm1',
     categories: ['c1', 'c2'],
@@ -31,6 +31,7 @@ const List<Meal> dummyMeals = [
     isVegan: true,
     isVegetarian: true,
     isLactoseFree: true,
+    isFavorite: false,
   ),
   Meal(
     id: 'm2',
@@ -57,6 +58,7 @@ const List<Meal> dummyMeals = [
     isVegan: false,
     isVegetarian: false,
     isLactoseFree: false,
+    isFavorite: false,
   ),
   Meal(
     id: 'm3',
@@ -86,6 +88,7 @@ const List<Meal> dummyMeals = [
     isVegan: false,
     isVegetarian: false,
     isLactoseFree: true,
+    isFavorite: false,
   ),
   Meal(
     id: 'm4',
@@ -119,6 +122,7 @@ const List<Meal> dummyMeals = [
     isVegan: false,
     isVegetarian: false,
     isLactoseFree: false,
+    isFavorite: false,
   ),
   Meal(
     id: 'm5',
@@ -155,6 +159,7 @@ const List<Meal> dummyMeals = [
     isVegan: false,
     isVegetarian: true,
     isLactoseFree: true,
+    isFavorite: false,
   ),
   Meal(
     id: 'm6',
@@ -188,6 +193,7 @@ const List<Meal> dummyMeals = [
     isVegan: false,
     isVegetarian: true,
     isLactoseFree: false,
+    isFavorite: false,
   ),
   Meal(
     id: 'm7',
@@ -217,6 +223,7 @@ const List<Meal> dummyMeals = [
     isVegan: false,
     isVegetarian: true,
     isLactoseFree: false,
+    isFavorite: false,
   ),
   Meal(
     id: 'm8',
@@ -248,6 +255,7 @@ const List<Meal> dummyMeals = [
     isVegan: false,
     isVegetarian: false,
     isLactoseFree: true,
+    isFavorite: false,
   ),
   Meal(
     id: 'm9',
@@ -295,6 +303,7 @@ const List<Meal> dummyMeals = [
     isVegan: false,
     isVegetarian: true,
     isLactoseFree: false,
+    isFavorite: false,
   ),
   Meal(
     id: 'm10',
@@ -325,5 +334,6 @@ const List<Meal> dummyMeals = [
     isVegan: true,
     isVegetarian: true,
     isLactoseFree: true,
+    isFavorite: false,
   ),
 ];
