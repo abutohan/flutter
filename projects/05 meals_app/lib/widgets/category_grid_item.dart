@@ -9,31 +9,37 @@ class CategoryGridItem extends StatelessWidget {
   });
 
   final Category category;
-  final void Function() onSelectCategory;
+  final VoidCallback onSelectCategory;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
+    final gradientColors = [
+      category.color.withOpacity(0.5),
+      category.color.withOpacity(0.9),
+    ];
+
     return InkWell(
       onTap: onSelectCategory,
-      splashColor: Theme.of(context).primaryColor,
-      borderRadius: BorderRadius.circular(16),
+      splashColor: theme.primaryColor,
+      borderRadius: const BorderRadius.all(Radius.circular(16)),
       child: Container(
         padding: const EdgeInsets.all(26),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: const BorderRadius.all(Radius.circular(16)),
           gradient: LinearGradient(
-            colors: [
-              category.color.withOpacity(0.5),
-              category.color.withOpacity(0.9),
-            ],
+            colors: gradientColors,
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
         ),
         child: Text(
           category.title,
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(
-            color: Theme.of(context).colorScheme.onBackground,
+          style: textTheme.titleLarge?.copyWith(
+            color: colorScheme.onBackground,
           ),
         ),
       ),

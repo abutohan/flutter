@@ -101,20 +101,22 @@ class _TabsScreenState extends State<TabsScreen> {
       ),
     ];
 
-    return Scaffold(
-      appBar: AppBar(title: Text(pageTitles[_selectedPageIndex])),
-      body: pages[_selectedPageIndex],
-      drawer: MainDrawer(onSelectScreen: _setScreen),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (index) => setState(() => _selectedPageIndex = index),
-        currentIndex: _selectedPageIndex,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.set_meal),
-            label: "Categories",
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.star), label: "Favorites"),
-        ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(title: Text(pageTitles[_selectedPageIndex])),
+        body: pages[_selectedPageIndex],
+        drawer: MainDrawer(onSelectScreen: _setScreen),
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: (index) => setState(() => _selectedPageIndex = index),
+          currentIndex: _selectedPageIndex,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.set_meal),
+              label: "Categories",
+            ),
+            BottomNavigationBarItem(icon: Icon(Icons.star), label: "Favorites"),
+          ],
+        ),
       ),
     );
   }
