@@ -32,13 +32,16 @@ class MealItem extends StatelessWidget {
   }
 
   Widget _buildMealImage() {
-    return FadeInImage(
-      placeholder: MemoryImage(kTransparentImage),
-      image: NetworkImage(meal.imageUrl),
-      fit: BoxFit.cover,
-      height: 200,
-      width: double.infinity,
-      fadeInDuration: const Duration(milliseconds: 300),
+    return Hero(
+      tag: meal.id,
+      child: FadeInImage(
+        placeholder: MemoryImage(kTransparentImage),
+        image: NetworkImage(meal.imageUrl),
+        fit: BoxFit.cover,
+        height: 200,
+        width: double.infinity,
+        fadeInDuration: const Duration(milliseconds: 300),
+      ),
     );
   }
 

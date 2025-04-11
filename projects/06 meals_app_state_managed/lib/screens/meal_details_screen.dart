@@ -63,9 +63,19 @@ class MealDetailsScreen extends ConsumerWidget {
                   ),
                 );
               },
-              icon: Icon(
-                isFavorite ? Icons.star : Icons.star_border,
-                color: Colors.white,
+              icon: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 300),
+                transitionBuilder: (child, animation) {
+                  return RotationTransition(
+                    turns: Tween(begin: 0.8, end: 1.0).animate(animation),
+                    child: child,
+                  );
+                },
+                child: Icon(
+                  key: ValueKey(isFavorite),
+                  isFavorite ? Icons.star : Icons.star_border,
+                  color: Colors.white,
+                ),
               ),
             ),
           ],
@@ -73,16 +83,19 @@ class MealDetailsScreen extends ConsumerWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Image.network(
-                meal.imageUrl,
-                height: 300,
-                width: double.infinity,
-                fit: BoxFit.cover,
-                loadingBuilder:
-                    (ctx, child, progress) =>
-                        progress == null
-                            ? child
-                            : const LinearProgressIndicator(),
+              Hero(
+                tag: meal.id,
+                child: Image.network(
+                  meal.imageUrl,
+                  height: 300,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  loadingBuilder:
+                      (ctx, child, progress) =>
+                          progress == null
+                              ? child
+                              : const LinearProgressIndicator(),
+                ),
               ),
               const SizedBox(height: 14),
               _buildSectionTitle(context, 'Ingredients'),
