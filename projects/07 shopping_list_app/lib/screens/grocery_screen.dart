@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shopping_list_app/data/categories.dart';
 import 'package:shopping_list_app/models/category.dart';
 import 'package:shopping_list_app/models/grocery_item.dart';
+import 'package:http/http.dart' as http;
 
 class GroceryScreen extends StatefulWidget {
   const GroceryScreen({super.key});
@@ -16,6 +19,7 @@ class _GroceryScreenState extends State<GroceryScreen> {
   String _enteredTitle = "";
   int _enteredQty = 1;
   Category _selectedCategory = categories[Categories.vegetables]!;
+  bool _isSending = false;
 
   static DropdownMenuItem<Category> _buildDropdownItem(
     MapEntry<Categories, Category> category,
@@ -32,18 +36,40 @@ class _GroceryScreenState extends State<GroceryScreen> {
     );
   }
 
-  void _saveItem(BuildContext context) {
+  void _saveItem(BuildContext context) async {
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState!.save();
-      Navigator.pop(
-        context,
-        GroceryItem(
-          id: DateTime.now().toString(),
-          name: _enteredTitle,
-          quantity: _enteredQty,
-          category: _selectedCategory,
-        ),
+      setState(() {
+        _isSending = true;
+      });
+      final url = Uri.https(
+        "flutter-prep-fec5b-default-rtdb.asia-southeast1.firebasedatabase.app",
+        "shopping-list.json",
       );
+      final response = await http.post(
+        url,
+        headers: {"Content-Type": "application/json"},
+        body: json.encode({
+          "name": _enteredTitle,
+          "quantity": _enteredQty,
+          "category": _selectedCategory.name,
+        }),
+      );
+
+      final Map<String, dynamic> resData = json.decode(response.body);
+
+      if (context.mounted) {
+        // Navigator.pop(context);
+        Navigator.pop(
+          context,
+          GroceryItem(
+            id: resData["name"],
+            name: _enteredTitle,
+            quantity: _enteredQty,
+            category: _selectedCategory,
+          ),
+        );
+      }
     }
   }
 
@@ -90,6 +116,7 @@ class _GroceryScreenState extends State<GroceryScreen> {
               _FormActions(
                 onReset: () => _formKey.currentState?.reset(),
                 onSave: () => _saveItem(context),
+                isSending: _isSending,
               ),
             ],
           ),
@@ -150,17 +177,35 @@ class _GroceryFormField extends StatelessWidget {
 class _FormActions extends StatelessWidget {
   final VoidCallback onReset;
   final VoidCallback onSave;
+  final bool isSending;
 
-  const _FormActions({required this.onReset, required this.onSave});
+  const _FormActions({
+    required this.onReset,
+    required this.onSave,
+    required this.isSending,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        TextButton(onPressed: onReset, child: const Text("Reset")),
+        TextButton(
+          onPressed: isSending ? null : onReset,
+          child: const Text("Reset"),
+        ),
         const SizedBox(width: 16),
-        ElevatedButton(onPressed: onSave, child: const Text("Add Item")),
+        ElevatedButton(
+          onPressed: isSending ? null : onSave,
+          child:
+              isSending
+                  ? const SizedBox(
+                    height: 16,
+                    width: 16,
+                    child: CircularProgressIndicator(),
+                  )
+                  : const Text("Add Item"),
+        ),
       ],
     );
   }

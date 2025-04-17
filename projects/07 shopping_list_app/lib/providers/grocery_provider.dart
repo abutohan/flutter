@@ -11,6 +11,15 @@ class GroceryNotifier extends StateNotifier<List<GroceryItem>> {
   void removeItem(GroceryItem groceryItem) {
     state = state.where((i) => i.id != groceryItem.id).toList();
   }
+
+  void initData(Future<List<GroceryItem>> groceryItems) async {
+    final items = await groceryItems;
+    state = [...items];
+  }
+
+  void revertDeletion(List<GroceryItem> groceryItems) {
+    state = groceryItems;
+  }
 }
 
 final groceryListProvider = StateNotifierProvider((ref) {
